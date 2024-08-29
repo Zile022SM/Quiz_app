@@ -1,5 +1,4 @@
 
-
 :root {
   --color-darkest: #343a40;
   --color-dark: #495057;
@@ -76,7 +75,7 @@ h2 {
 h3 {
   font-size: 2.4rem;
   font-weight: 600;
-  margin-bottom: 4rem;
+  margin-bottom: 6rem;
 }
 
 h4 {
@@ -132,6 +131,7 @@ progress {
 
 .btn:not([disabled]):hover {
   background-color: var(--color-darkest);
+  transform: translateX(2rem);
 }
 
 .btn-option:not([disabled]):hover {
