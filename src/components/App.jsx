@@ -6,6 +6,8 @@ import Loader from "./Loader";
 import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Question from "./Question";
+import NextButton from "./NextButton";
+import Progress from "./Progress";
 
 const initialState = {
   questions: [],
@@ -29,6 +31,8 @@ function reducer(state, action) {
     case "newAnswer":
       const question = state.questions.at(state.index);
       return { ...state, answer: action.payload,points:action.payload === question.correctOption ? state.points + question.points : state.points};
+    case "nextQuestion":
+      return {...state, index: state.index + 1, answer:null };
     default:
       throw new Error("Action unknown");
   }
@@ -40,6 +44,7 @@ function App() {
     initialState
   );
   const numQuestions = questions.length;
+  const maxPossiblePoints = questions.reduce((prev,current)=> prev + current.points, 0);
 
   useEffect(function () {
     setTimeout(() => {
@@ -61,7 +66,12 @@ function App() {
           <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
         )}
         {status === "active" && (
-          <Question question={questions[index]} index={index} dispatch={dispatch} answer={answer} />
+          <>
+            <Progress index={index} numQuestions={numQuestions} points={points} maxPossiblePoints={maxPossiblePoints} />
+            <Question question={questions[index]} index={index} dispatch={dispatch} answer={answer} />
+            <NextButton dispatch={dispatch} answer={answer} /> 
+          </>
+          
         )}
       </Main>
     </div>
